@@ -1,0 +1,46 @@
+
+# 파일 경로 설정 라이브러리 설정
+
+```
+pop.path<-"../Popular/"
+install.package('KoNLP')
+library(tm)
+library(koNLP)
+```
+
+# get.msg함수 수정 후 문서 읽기
+
+```
+get.msg<-function(path){
+   con<-file(path, open="rt", encoding="UTF-8")
+   print("--------------------------------------------------------------------------------Start Con------------------------------------------------------------------------------")
+   print(head(con))
+   text<-readLines(con)
+   text<-noquote(text)
+   text<-gsub(",","",text)
+   text<-gsub("“","",text)
+   text<-gsub("”","",text)
+   text<-gsub("‘","",text)
+   text<-gsub("’","",text)
+   text<-gsub("·","",text)
+   Noun<-extractNoun(text)
+   text<-c(Noun)
+   close(con)
+   return(paste(text,collapse="\n"))
+}
+
+pop.docs<-dir(pop.path)
+all.pop<-sapply(pop.docs, function(p) get.msg(paste(pop.path,p,sep="/")))
+
+ get.tdm<-function(doc.vec){
+    doc.corpus<-Corpus(VectorSource(doc.vec))
+    control<-list(removePunctuation=TRUE, removeNumbers=TRUE, minDocFreq=2)
+    doc.dtm<-TermDocumentMatrix(doc.corpus,control)
+    return(doc.dtm)
+ }
+
+pop.tdm<-get.tdm(all.pop)
+
+pop.matrix <- as.matrix(pop.tdm)
+print(pop.matrix)
+```
