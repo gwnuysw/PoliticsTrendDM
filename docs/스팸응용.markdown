@@ -44,3 +44,4 @@ pop.tdm<-get.tdm(all.pop)
 pop.matrix <- as.matrix(pop.tdm)
 print(pop.matrix)
 ```
+![image](https://github.com/gwnuysw/PoliticsTrendDM/blob/master/capture/first_pop_matrix.png?raw=true)
