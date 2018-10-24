@@ -4,7 +4,7 @@
 ```
 pop.path<-"../Popular/"
 notPop.path<-"../Notpop"
-
+testPop.path<-"../testPop"
 library(ggplot2)
 library(tm)
 library(koNLP)
@@ -52,8 +52,6 @@ print(pop.matrix)
 
 # 인기있는 글 베이즈 분류 학습시키기
 ```
-pop.tdm <- as.matrix(pop.tdm)
-
 pop.counts<-rowSums(pop.matrix)
 
 pop.df<-data.frame(cbind(names(pop.counts),as.numeric(pop.counts)),stringsAsFactors=FALSE)
@@ -70,6 +68,7 @@ pop.df<-transform(pop.df, density=pop.density,occurrence=pop.occurrence)
 
 head(pop.df[with(pop.df, order(-occurrence)),])
 ```
+여기까지 확인함 10/24
 # 인기 없는 글 베이즈 분류 학습시키기
 ```
 notpop.docs<-dir(notpop.path)
@@ -105,7 +104,7 @@ classify.email<-function(path, training.df, prior=0.5, c=1e-6){
 ```
 # 분류기 실행해보기
 ```
-realPop.docs<-dir(realPop.path)
+testPop.docs<-dir(testPop.path)
 realPop.poptest<-sapply(realPop.docs, function(p) classify.email(paste(realPop.path,p,sep="/"),training.df=realPop.df))
 realPop.poptest<-sapply(realPop.docs, function(p) classify.email(paste(realPop.path,p,sep="/"),training.df=notPop.df))
 realPop.res<-ifelse(realPop.poptest > realpop.notpoptest,TRUE,FALSE)
