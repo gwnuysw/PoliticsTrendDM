@@ -7,7 +7,7 @@ notPop.path<-"../Notpop"
 testPop.path<-"../testPop"
 library(ggplot2)
 library(tm)
-library(koNLP)
+library(KoNLP)
 
 install.package('KoNLP')
 install.package('tm')
@@ -105,7 +105,7 @@ classify.email<-function(path, training.df, prior=0.5, c=1e-6){
 # 분류기 실행해보기
 ```
 testPop.docs<-dir(testPop.path)
-realPop.poptest<-sapply(realPop.docs, function(p) classify.email(paste(realPop.path,p,sep="/"),training.df=realPop.df))
+testPop.poptest<-sapply(testPop.docs, function(p) classify.email(paste(testPop.path,p,sep="/"),training.df=pop.df))  //문제발생 10/24
 realPop.poptest<-sapply(realPop.docs, function(p) classify.email(paste(realPop.path,p,sep="/"),training.df=notPop.df))
 realPop.res<-ifelse(realPop.poptest > realpop.notpoptest,TRUE,FALSE)
 summary(realPop.res)
